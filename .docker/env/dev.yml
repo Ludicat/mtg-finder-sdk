@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+    mtg-sdk-toolbox:
+        container_name: ${CLI_CONTAINER_NAME}
+        build:
+            context: ../php-cli-${PHP_VERSION}
+            args:
+                PHP_CONTAINER_NAME: ${PHP_CONTAINER_NAME}
+                GITHUB_TOKEN: ${GITHUB_TOKEN}
+                GITLAB_TOKEN: ${GITLAB_TOKEN}
+                GIT_EMAIL: ${GIT_EMAIL}
+                GIT_NAME: ${GIT_NAME}
+        restart: "no"
+        environment:
+            APP_ENV: dev
+            APP_DEBUG: 1
+        ports:
+            - 8080
+            - 8443
+            - 4443
+            - 3000
+        networks:
+            - internal
+            - reverse_proxy
+        volumes:
+            - ../../:/var/www/html/
+            - /etc/hosts:/etc/hosts:ro
+        tty: true
+
+networks:
+    reverse_proxy:
+        external: true
+    internal:
+        driver: bridge
+        external: false
+    elk:
+        driver: bridge
