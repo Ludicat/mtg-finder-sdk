@@ -1,4 +1,5 @@
 {
+  "name": "ludicat/mtg-finder-sdk",
   "type": "project",
   "license": "proprietary",
   "minimum-stability": "stable",
